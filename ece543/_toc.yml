@@ -1,0 +1,25 @@
+# Table of contents
+# Learn more at https://jupyterbook.org/customize/toc.html
+
+format: jb-book
+root: intro
+parts:
+- caption: Part One
+  # numbered: true
+  chapters:
+  - file: content/mosfet_device_physics
+  # - file: content/part1/geometrical
+# - caption: Part Two
+#   numbered: true
+#   chapters:
+#   - file: content/part2/radiometry
+# - caption: Problems
+#   numbered: false
+#   chapters: 
+#   - file: content/problems/geometrical
+#   - file: content/problems/lenses
+- caption: Reference
+  numbered: false
+  chapters: 
+  # - file: content/transforms
+  - file: content/equations
