@@ -4,22 +4,27 @@
 format: jb-book
 root: intro
 parts:
-- caption: Part One
+- caption: MOSFET Physics
   # numbered: true
   chapters:
   - file: content/mosfet_device_physics
-  # - file: content/part1/geometrical
-# - caption: Part Two
-#   numbered: true
+  - file: content/small_signal_model
+  - file: content/common_source_amplifier
+  - file: content/common_drain_amplifier
+  - file: content/common_gate_amplifier
+  - file: content/cascode_amplifier
+  - file: content/amplifiers_summary
+# - caption: Amplifiers
+# #   numbered: true
 #   chapters:
-#   - file: content/part2/radiometry
+#   - file: content/part2/amplifiers_summary
 # - caption: Problems
 #   numbered: false
 #   chapters: 
 #   - file: content/problems/geometrical
 #   - file: content/problems/lenses
-- caption: Reference
-  numbered: false
-  chapters: 
-  # - file: content/transforms
-  - file: content/equations
+# - caption: Reference
+#   numbered: false
+#   chapters: 
+#   # - file: content/transforms
+#   - file: content/equations
