@@ -23,8 +23,8 @@ parts:
 #   chapters: 
 #   - file: content/problems/geometrical
 #   - file: content/problems/lenses
-# - caption: Reference
-#   numbered: false
-#   chapters: 
-#   # - file: content/transforms
-#   - file: content/equations
+- caption: Reference
+  numbered: false
+  chapters: 
+  - file: content/glossary
+  - file: content/equations
