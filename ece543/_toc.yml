@@ -14,15 +14,20 @@ parts:
   - file: content/common_gate_amplifier
   - file: content/cascode_amplifier
   - file: content/amplifiers_summary
-# - caption: Amplifiers
-# #   numbered: true
-#   chapters:
-#   - file: content/part2/amplifiers_summary
+- caption: Differential Amplifiers
+  chapters:
+  - file: content/differential_amplifiers
+  - file: content/differential_pair
+  - file: content/current_mirrors
+  - file: content/frequency_response
+- caption: Noise and Feedback
+  chapters:
+  - file: content/noise
+  - file: content/feedback
 # - caption: Problems
 #   numbered: false
 #   chapters: 
 #   - file: content/problems/geometrical
-#   - file: content/problems/lenses
 - caption: Reference
   numbered: false
   chapters: 
