@@ -1,8 +1,10 @@
 # ece543
 ECEN 543 Lecture Notes (Winter 2021)
 
+Lecture notes for CMOS Amplifier Design taught at Brigham Young University.
+
 The site is hosted through GitHub Pages and is viewable at 
-[https://sequoiap.github.io/ece543]().
+[https://sequoiap.github.io/ece543](https://sequoiap.github.io/ece543).
 
 ## Build
 
