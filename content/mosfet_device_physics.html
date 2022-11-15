@@ -1,0 +1,846 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>MOSFET Device Physics &#8212; CMOS Amplifier Design</title>
+    
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+
+    
+  <link rel="stylesheet"
+    href="../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" href="../_static/styles/sphinx-book-theme.css?digest=5115cc725059bd94278eecd172e13a965bf8f5a9" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/design-style.b7bb847fb20b106c3d81b95245e65545.min.css" />
+    
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf">
+
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/clipboard.min.js"></script>
+    <script src="../_static/copybutton.js"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?digest=9c920249402e914e316237a7dbc6769907cce411"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../_static/sphinx-thebe.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Small Signal Model" href="small_signal_model.html" />
+    <link rel="prev" title="Welcome to ECEN 661" href="../index.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="None">
+    
+
+    <!-- Google Analytics -->
+    
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="60">
+<!-- Checkboxes to toggle the left sidebar -->
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation" aria-label="Toggle navigation sidebar">
+<label class="overlay overlay-navbar" for="__navigation">
+    <div class="visually-hidden">Toggle navigation sidebar</div>
+</label>
+<!-- Checkboxes to toggle the in-page toc -->
+<input type="checkbox" class="sidebar-toggle" name="__page-toc" id="__page-toc" aria-label="Toggle in-page Table of Contents">
+<label class="overlay overlay-pagetoc" for="__page-toc">
+    <div class="visually-hidden">Toggle in-page Table of Contents</div>
+</label>
+<!-- Headers at the top -->
+<div class="announcement header-item noprint"></div>
+<div class="header header-item noprint"></div>
+
+    
+    <div class="container-fluid" id="banner"></div>
+
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<!-- Sidebar -->
+<div class="bd-sidebar noprint" id="site-navigation">
+    <div class="bd-sidebar__content">
+        <div class="bd-sidebar__top"><div class="navbar-brand-box">
+    <a class="navbar-brand text-wrap" href="../index.html">
+      
+        <!-- `logo` is deprecated in Sphinx 4.0, so remove this when we stop supporting 3 -->
+        
+      
+      
+      <img src="../_static/logo.png" class="logo" alt="logo">
+      
+      
+      <h1 class="site-logo" id="site-title">CMOS Amplifier Design</h1>
+      
+    </a>
+</div><form class="bd-search d-flex align-items-center" action="../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../index.html">
+                    Welcome to ECEN 661
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  MOSFET Physics
+ </span>
+</p>
+<ul class="current nav bd-sidenav">
+ <li class="toctree-l1 current active">
+  <a class="current reference internal" href="#">
+   MOSFET Device Physics
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="small_signal_model.html">
+   Small Signal Model
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="common_source_amplifier.html">
+   Common Source Amplifier
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="common_drain_amplifier.html">
+   Common Drain Amplifier
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="common_gate_amplifier.html">
+   Common Gate Amplifiers
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="cascode_amplifier.html">
+   Cascode Amplifiers
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="amplifiers_summary.html">
+   Amplifiers Summary
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Differential Amplifiers
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="differential_amplifiers.html">
+   Differential Amplifiers
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="differential_pair.html">
+   Differential Pair
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="current_mirrors.html">
+   Current Mirrors
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="frequency_response.html">
+   Frequency Response
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Noise and Feedback
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="noise.html">
+   Noise
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="feedback.html">
+   Feedback
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Reference
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="glossary.html">
+   Glossary: Variables and Terms
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="equations.html">
+   Equations
+  </a>
+ </li>
+</ul>
+
+    </div>
+</nav></div>
+        <div class="bd-sidebar__bottom">
+             <!-- To handle the deprecated key -->
+            
+            <div class="navbar_extra_footer">
+            Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+            </div>
+            
+        </div>
+    </div>
+    <div id="rtd-footer-container"></div>
+</div>
+
+
+          
+
+
+          
+<!-- A tiny helper pixel to detect if we've scrolled -->
+<div class="sbt-scroll-pixel-helper"></div>
+<!-- Main content -->
+<div class="col py-0 content-container">
+    
+    <div class="header-article row sticky-top noprint">
+        
+
+
+
+<div class="col py-1 d-flex header-article-main">
+    <div class="header-article__left">
+        
+        <label for="__navigation"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="right"
+title="Toggle navigation"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-bars"></i>
+  </span>
+
+</label>
+
+        
+    </div>
+    <div class="header-article__right">
+<div class="menu-dropdown menu-dropdown-launch-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Launch interactive content">
+      <i class="fas fa-rocket"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="https://mybinder.org/v2/gh/sequoiap/ece543/master?urlpath=tree/docs/content/mosfet_device_physics.ipynb"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Launch on Binder"
+>
+  
+
+<span class="headerbtn__icon-container">
+  
+    <img src="../_static/images/logo_binder.svg">
+  </span>
+<span class="headerbtn__text-container">Binder</span>
+</a>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+
+<button onclick="toggleFullScreen()"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="bottom"
+title="Fullscreen mode"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+<div class="menu-dropdown menu-dropdown-repository-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Source repositories">
+      <i class="fab fa-github"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="https://github.com/sequoiap/ece543"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Source repository"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="headerbtn__text-container">repository</span>
+</a>
+
+      </li>
+      
+      <li>
+        <a href="https://github.com/sequoiap/ece543/issues/new?title=Issue%20on%20page%20%2Fcontent/mosfet_device_physics.html&body=Your%20issue%20content%20here."
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Open an issue"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="headerbtn__text-container">open issue</span>
+</a>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+
+<div class="menu-dropdown menu-dropdown-download-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Download this page">
+      <i class="fas fa-download"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="../_sources/content/mosfet_device_physics.ipynb"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Download source file"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="headerbtn__text-container">.ipynb</span>
+</a>
+
+      </li>
+      
+      <li>
+        
+<button onclick="printPdf(this)"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="left"
+title="Print to PDF"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="headerbtn__text-container">.pdf</span>
+</button>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+<label for="__page-toc"
+  class="headerbtn headerbtn-page-toc"
+  
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-list"></i>
+  </span>
+
+</label>
+
+    </div>
+</div>
+
+<!-- Table of contents -->
+<div class="col-md-3 bd-toc show noprint">
+    <div class="tocsection onthispage pt-5 pb-3">
+        <i class="fas fa-list"></i> Contents
+    </div>
+    <nav id="bd-toc-nav" aria-label="Page">
+        <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#regimes-of-operation">
+   Regimes of Operation
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#current-equations">
+   Current Equations
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#transconductance">
+   Transconductance
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#channel-length-modulation">
+   Channel-length modulation
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#body-effect">
+   Body effect
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#subthreshold-conduction">
+   Subthreshold conduction
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#mosfet-capacitance">
+   MOSFET capacitance
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#mosfet-as-a-varactor">
+     MOSFET as a varactor
+    </a>
+   </li>
+  </ul>
+ </li>
+</ul>
+
+    </nav>
+</div>
+    </div>
+    <div class="article row">
+        <div class="col pl-md-3 pl-lg-5 content-container">
+            <!-- Table of contents that is only displayed when printing the page -->
+            <div id="jb-print-docs-body" class="onlyprint">
+                <h1>MOSFET Device Physics</h1>
+                <!-- Table of contents -->
+                <div id="print-main-content">
+                    <div id="jb-print-toc">
+                        
+                        <div>
+                            <h2> Contents </h2>
+                        </div>
+                        <nav aria-label="Page">
+                            <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#regimes-of-operation">
+   Regimes of Operation
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#current-equations">
+   Current Equations
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#transconductance">
+   Transconductance
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#channel-length-modulation">
+   Channel-length modulation
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#body-effect">
+   Body effect
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#subthreshold-conduction">
+   Subthreshold conduction
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#mosfet-capacitance">
+   MOSFET capacitance
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#mosfet-as-a-varactor">
+     MOSFET as a varactor
+    </a>
+   </li>
+  </ul>
+ </li>
+</ul>
+
+                        </nav>
+                    </div>
+                </div>
+            </div>
+            <main id="main-content" role="main">
+                
+              <div>
+                
+  <section class="tex2jax_ignore mathjax_ignore" id="mosfet-device-physics">
+<h1>MOSFET Device Physics<a class="headerlink" href="#mosfet-device-physics" title="Permalink to this headline">#</a></h1>
+<p>A few definitions:</p>
+<dl class="simple myst">
+<dt><span class="math notranslate nohighlight">\(V_{DS}\)</span></dt><dd><p>Voltage from drain to source.</p>
+</dd>
+<dt><span class="math notranslate nohighlight">\(V_{GS}\)</span></dt><dd><p>Voltage from gate to source.</p>
+</dd>
+</dl>
+<section id="regimes-of-operation">
+<h2>Regimes of Operation<a class="headerlink" href="#regimes-of-operation" title="Permalink to this headline">#</a></h2>
+<figure class="align-default" id="fig1">
+<a class="reference internal image-reference" href="../_images/fig1.svg"><img alt="../_images/fig1.svg" height="350px" src="../_images/fig1.svg" /></a>
+<figcaption>
+<p><span class="caption-number">Fig. 1 </span><span class="caption-text">Physical model of a transistor and its circuit representation.</span><a class="headerlink" href="#fig1" title="Permalink to this image">#</a></p>
+</figcaption>
+</figure>
+<p>In this configuration, the transistor is off. The p-substrate is almost an
+insulator, and the transistor doesn’t conduct. There’s no current, because
+there’s nowhere for it to go!</p>
+<figure class="align-default" id="fig2">
+<a class="reference internal image-reference" href="../_images/fig2.svg"><img alt="../_images/fig2.svg" height="350px" src="../_images/fig2.svg" /></a>
+<figcaption>
+<p><span class="caption-number">Fig. 2 </span><span class="caption-text">The gate voltage is less than the drain voltage, and the transistor is off.</span><a class="headerlink" href="#fig2" title="Permalink to this image">#</a></p>
+</figcaption>
+</figure>
+<p>The gate voltage is rising, repelling p-type carriers away from the channel.</p>
+<p>In this situation, the electrons are still all attached to their atoms’ nucleus
+and are not moving. The negative ions are forming a depletion region; there are
+no free carriers, but the net charge of the region in the material is negative.</p>
+<p>Since there are no holes or carriers to conduct electrons, the current is still
+zero.</p>
+<dl class="simple myst">
+<dt>doping</dt><dd><p>the introduction of impurities into a semiconductor crystal. It can leave
+open holes for electrons to fill in the crystal lattice, or have too many
+electrons to fill the valence shell. This means free carriers are introduced,
+but since the total number of protons and electrons are equal, it still
+leaves the material electrically neutral.</p>
+</dd>
+</dl>
+<figure class="align-default" id="fig3">
+<a class="reference internal image-reference" href="../_images/fig3.svg"><img alt="../_images/fig3.svg" height="350px" src="../_images/fig3.svg" /></a>
+<figcaption>
+<p><span class="caption-number">Fig. 3 </span><span class="caption-text">The gate voltage is greater than the drain voltage, the transistor is on, and
+current starts to flow.</span><a class="headerlink" href="#fig3" title="Permalink to this image">#</a></p>
+</figcaption>
+</figure>
+<p>The gate voltage is now greater than the threshold voltage, and the electrons
+form a channel close to the gate. Free electrons can detach from their nucleus
+and flow. Current flow from the drain to the source is now non-zero.</p>
+<figure class="align-default" id="fig4">
+<a class="reference internal image-reference" href="../_images/fig4.svg"><img alt="../_images/fig4.svg" height="350px" src="../_images/fig4.svg" /></a>
+<figcaption>
+<p><span class="caption-number">Fig. 4 </span><span class="caption-text">3D view of a MOSFET with length and width dimensions labelled.</span><a class="headerlink" href="#fig4" title="Permalink to this image">#</a></p>
+</figcaption>
+</figure>
+<p>Obviously, when <span class="math notranslate nohighlight">\(V_{\text{GS}} \lt V_{\text{th}}\)</span>, <span class="math notranslate nohighlight">\(I_D = 0\)</span>. When the gate
+voltage surpasses the threshold voltage, the current through the drain is given
+by</p>
+<div class="math notranslate nohighlight" id="equation-id-vgs-gt-vth">
+<span class="eqno">(1)<a class="headerlink" href="#equation-id-vgs-gt-vth" title="Permalink to this equation">#</a></span>\[
+    I_D = \frac{1}{2} \mu c_{\text{ox}} \frac{W}{L} \left[ 2 (V_{\text{GS}} - V_{\text{th}}) V_{\text{DS}} - V_{DS}^2 \right]
+\]</div>
+<p>where <span class="math notranslate nohighlight">\(\mu\)</span> is the electron mobility and <span class="math notranslate nohighlight">\(c_{\text{ox}}\)</span> is the gate oxide
+capacitance per unit area.</p>
+<p>The larger <span class="math notranslate nohighlight">\(L\)</span> is, the smaller <span class="math notranslate nohighlight">\(I_D\)</span> is. Conversely, the wider <span class="math notranslate nohighlight">\(W\)</span> is, the
+greater <span class="math notranslate nohighlight">\(I_D\)</span> is.</p>
+<figure class="align-default" id="fig-boot" style="width: 400px">
+<div class="cell_output docutils container">
+<img alt="../_images/mosfet_device_physics_9_0.png" src="../_images/mosfet_device_physics_9_0.png" />
+</div>
+<figcaption>
+<p><span class="caption-number">Fig. 5 </span><span class="caption-text">Current vs. drain voltage (assume <span class="math notranslate nohighlight">\(V_{GS} \gt V_{th}\)</span>).</span><a class="headerlink" href="#fig-boot" title="Permalink to this image">#</a></p>
+</figcaption>
+</figure>
+<p>Note that in the above plot, the current is initially linear until the
+second term catches up. At <span class="math notranslate nohighlight">\(V_{\text{DS}} = V_{\text{GS}} - V_{\text{th}}\)</span>, pinchoff occurs.</p>
+<figure class="align-default" id="id1">
+<a class="reference internal image-reference" href="../_images/fig5.svg"><img alt="../_images/fig5.svg" height="350px" src="../_images/fig5.svg" /></a>
+<figcaption>
+<p><span class="caption-number">Fig. 6 </span><span class="caption-text">3D view of a MOSFET with length and width dimensions labelled.</span><a class="headerlink" href="#id1" title="Permalink to this image">#</a></p>
+</figcaption>
+</figure>
+<figure class="align-default" id="id2">
+<a class="reference internal image-reference" href="../_images/fig6.svg"><img alt="../_images/fig6.svg" height="350px" src="../_images/fig6.svg" /></a>
+<figcaption>
+<p><span class="caption-number">Fig. 7 </span><span class="caption-text">3D view of a MOSFET with length and width dimensions labelled.</span><a class="headerlink" href="#id2" title="Permalink to this image">#</a></p>
+</figcaption>
+</figure>
+<p>The channel is “pinched off.” This means a further increase of <span class="math notranslate nohighlight">\(V_{\text{DS}}\)</span> does not increase <span class="math notranslate nohighlight">\(I_D\)</span>.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p><strong>So, is <span class="math notranslate nohighlight">\(I_D = 0\)</span>?</strong></p>
+<p>No; the super strong electric field in the pinched off region causes any electron entering that field to be swept away (an across).</p>
+</div>
+<figure class="align-default" id="fig-triode-saturation" style="width: 400px">
+<div class="cell_output docutils container">
+<img alt="../_images/mosfet_device_physics_16_0.png" src="../_images/mosfet_device_physics_16_0.png" />
+</div>
+<figcaption>
+<p><span class="caption-number">Fig. 8 </span><span class="caption-text">Current vs. drain voltage (assume <span class="math notranslate nohighlight">\(V_{GS} \gt V_{th}\)</span>).</span><a class="headerlink" href="#fig-triode-saturation" title="Permalink to this image">#</a></p>
+</figcaption>
+</figure>
+<p>Analog designers mostly work in saturation, while digital designs usually operate in triode (and off).</p>
+</section>
+<section id="current-equations">
+<h2>Current Equations<a class="headerlink" href="#current-equations" title="Permalink to this headline">#</a></h2>
+<p>The current equations for triode and saturation are</p>
+<div class="math notranslate nohighlight" id="equation-id-triode">
+<span class="eqno">(3)<a class="headerlink" href="#equation-id-triode" title="Permalink to this equation">#</a></span>\[
+    I_D = \frac{1}{2} \mu c_{\text{ox}} \frac{W}{L} \left[ 2 (V_{\text{GS}} - V_{\text{th}}) V_{\text{DS}} - V_{DS}^2 \right]
+\]</div>
+<p>and</p>
+<div class="math notranslate nohighlight" id="equation-id-triode">
+<span class="eqno">(3)<a class="headerlink" href="#equation-id-triode" title="Permalink to this equation">#</a></span>\[
+    I_D = \frac{1}{2} \mu c_{\text{ox}} \frac{W}{L} \left( V_{\text{GS}} - V_{\text{th}} \right)^2
+\]</div>
+<p>respectively.</p>
+<figure class="align-default" id="fig-current-varying-vgs" style="width: 400px">
+<div class="cell_output docutils container">
+<img alt="../_images/mosfet_device_physics_19_0.png" src="../_images/mosfet_device_physics_19_0.png" />
+</div>
+<figcaption>
+<p><span class="caption-number">Fig. 9 </span><span class="caption-text">Current vs. drain voltage (assume <span class="math notranslate nohighlight">\(V_{GS} \gt V_{th}\)</span>).</span><a class="headerlink" href="#fig-current-varying-vgs" title="Permalink to this image">#</a></p>
+</figcaption>
+</figure>
+<p>The lower <span class="math notranslate nohighlight">\(V_{\text{GS}}\)</span>, the earlier the transition happens.</p>
+<p><span class="math notranslate nohighlight">\(V_{\text{th}}\)</span> doesn’t usually change; it’s typically around <span class="math notranslate nohighlight">\(0.5 \text{V}\)</span>.</p>
+<figure class="align-default" id="fig-zoomed-varying-vgs" style="width: 400px">
+<div class="cell_output docutils container">
+<img alt="../_images/mosfet_device_physics_22_0.png" src="../_images/mosfet_device_physics_22_0.png" />
+</div>
+<figcaption>
+<p><span class="caption-number">Fig. 10 </span><span class="caption-text">Current vs. drain voltage (assume <span class="math notranslate nohighlight">\(V_{GS} \gt V_{th}\)</span>).</span><a class="headerlink" href="#fig-zoomed-varying-vgs" title="Permalink to this image">#</a></p>
+</figcaption>
+</figure>
+<p>The current resembles the I-V curve of a resistor when biased in this region.</p>
+<p>In triode,</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+    \frac{\partial I_D}{\partial V_{\text{DS}}} &amp;= \frac{1}{2} \mu c_{\text{ox}} \frac{W}{L} \left[ 2 (V_{\text{GS}} - V_{\text{th}}) - 2 V_{\text{DS}} \right] \\
+    &amp;\approxeq \mu c_{\text{ox}} \frac{W}{L} \left( V_{\text{GS}} - V_{\text{th}} \right)
+\end{split}\]</div>
+<p>if <span class="math notranslate nohighlight">\(V_{\text{GS}} - V_{\text{th}} \gg V_{\text{DS}}\)</span>, and the resistance is given by</p>
+<div class="math notranslate nohighlight">
+\[
+    R = \left( \frac{\partial I_D}{\partial V_{\text{DS}}} \right)^{-1} \approxeq \frac{1}{\mu c_{\text{ox}} \frac{W}{L} \left( V_{\text{GS}} - V_{\text{th}} \right)}
+\]</div>
+<p>because resistance is defined as the inverse of the slope of the IV characteristic curve.</p>
+<figure class="align-default" id="fig7">
+<a class="reference internal image-reference" href="../_images/fig7.svg"><img alt="../_images/fig7.svg" height="200px" src="../_images/fig7.svg" /></a>
+<figcaption>
+<p><span class="caption-number">Fig. 11 </span><span class="caption-text">A MOSFET in triode can be used as a voltage-controlled resistor.</span><a class="headerlink" href="#fig7" title="Permalink to this image">#</a></p>
+</figcaption>
+</figure>
+</section>
+<section id="transconductance">
+<h2>Transconductance<a class="headerlink" href="#transconductance" title="Permalink to this headline">#</a></h2>
+<dl class="simple myst">
+<dt>transconductance</dt><dd><p>Transconductance is an expression of the performance of a field-effect transistor (FET). In general, the larger the transconductance figure for a device, the greater the gain (amplification) it is capable of delivering, when all other factors are held constant. For a FET, transconductance is the ratio of the change in drain current to the change in gate voltage over a defined, arbitrarily small interval on the drain-current-versus-gate-voltage curve. The unit is the siemens.</p>
+</dd>
+</dl>
+<p>Transconductance in saturation is given by:</p>
+<div class="math notranslate nohighlight" id="equation-transconductance-saturation">
+<span class="eqno">(4)<a class="headerlink" href="#equation-transconductance-saturation" title="Permalink to this equation">#</a></span>\[\begin{split}
+    g_m &amp;= \frac{\partial I_D}{\partial V_{\text{GS}}} = \frac{\partial \frac{1}{2} \mu c_{\text{ox}} \frac{W}{L} \left( V_{\text{GS}} - V_{\text{th}} \right)^2 }{\partial V_{\text{GS}}} \\
+    g_m &amp;= \mu c_{\text{ox}} \frac{W}{L} \left( V_{\text{GS}} - V_{\text{th}} \right) \\
+    g_m &amp;= \sqrt{2 \mu c_{\text{ox}} \frac{W}{L} I_D} \\
+    g_m &amp;= \frac{2 I_D}{V_{\text{GS}} - V_{\text{th}}}
+\end{split}\]</div>
+<p><span class="math notranslate nohighlight">\(g_m\)</span> is the slope at some point <span class="math notranslate nohighlight">\(V_{\text{GS}}\)</span>.</p>
+<figure class="align-default" id="fig-transconductance" style="width: 400px">
+<div class="cell_output docutils container">
+<img alt="../_images/mosfet_device_physics_27_0.png" src="../_images/mosfet_device_physics_27_0.png" />
+</div>
+<figcaption>
+<p><span class="caption-number">Fig. 12 </span><span class="caption-text"><span class="math notranslate nohighlight">\(g_m\)</span> is the slope at some point <span class="math notranslate nohighlight">\(V_{\text{GS}}\)</span>.</span><a class="headerlink" href="#fig-transconductance" title="Permalink to this image">#</a></p>
+</figcaption>
+</figure>
+</section>
+<section id="channel-length-modulation">
+<h2>Channel-length modulation<a class="headerlink" href="#channel-length-modulation" title="Permalink to this headline">#</a></h2>
+<p>Channel-length modulation (CLM) is a second order effect that doesn’t affect the IV curve as strongly. The channel length <span class="math notranslate nohighlight">\(L\)</span> becomes smaller as <span class="math notranslate nohighlight">\(V_{\text{DS}}\)</span> increases. As you increase <span class="math notranslate nohighlight">\(V_{\text{DS}}\)</span>, the pinchout zone gets a bit smaller, increasing <span class="math notranslate nohighlight">\(I_D\)</span>. Sometimes we ignore this effect.</p>
+<figure class="align-default" id="fig-current-with-clm" style="width: 400px">
+<div class="cell_output docutils container">
+<img alt="../_images/mosfet_device_physics_31_0.png" src="../_images/mosfet_device_physics_31_0.png" />
+</div>
+<figcaption>
+<p><span class="caption-number">Fig. 13 </span><span class="caption-text">Current with and without channel-length modulation.</span><a class="headerlink" href="#fig-current-with-clm" title="Permalink to this image">#</a></p>
+</figcaption>
+</figure>
+<p>The corresponding equation when in saturation is</p>
+<div class="math notranslate nohighlight" id="equation-current-in-saturation-clm">
+<span class="eqno">(5)<a class="headerlink" href="#equation-current-in-saturation-clm" title="Permalink to this equation">#</a></span>\[
+    I_D = \frac{1}{2} \mu c_{\text{ox}} \frac{W}{L} \left( V_{\text{GS}} - V_{\text{th}} \right)^2 \left( 1 + \lambda V_{\text{DS}} \right)
+\]</div>
+<p>and its slope is</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+    \frac{\partial I_D}{\partial V_{\text{DS}}} &amp;= \frac{1}{2} \mu c_{\text{ox}} \frac{W}{L} \left( V_{\text{GS}} - V_{\text{th}} \right)^2 \lambda \\
+    &amp;= I_D \rvert_{\text{w/o CLM}} \times \lambda
+\end{split}\]</div>
+<p>where <span class="math notranslate nohighlight">\(\lambda\)</span> is a process parameter that varies with transistor length.</p>
+<p>The smaller the architecture, the more pronounced CLM effects will be. This is bad for analog design! If you want a smaller slope, make <span class="math notranslate nohighlight">\(L\)</span> bigger (or have a smaller current)!</p>
+<figure class="align-default" id="fig-early-voltage" style="width: 400px">
+<div class="cell_output docutils container">
+<img alt="../_images/mosfet_device_physics_33_0.png" src="../_images/mosfet_device_physics_33_0.png" />
+</div>
+<figcaption>
+<p><span class="caption-number">Fig. 14 </span><span class="caption-text">The per-channel-length early voltage.</span><a class="headerlink" href="#fig-early-voltage" title="Permalink to this image">#</a></p>
+</figcaption>
+</figure>
+<p>If <span class="math notranslate nohighlight">\(V_E L \gg V_{\text{DS}}^{'}\)</span>:</p>
+<div class="math notranslate nohighlight">
+\[
+    m = \frac{I_D^{'}}{V_E L + V_{\text{DS}}^{'}} \approxeq \frac{I_D^{'}}{V_E L}
+\]</div>
+<p>and therefore</p>
+<div class="math notranslate nohighlight" id="equation-process-parameter">
+<span class="eqno">(6)<a class="headerlink" href="#equation-process-parameter" title="Permalink to this equation">#</a></span>\[
+    \lambda \approxeq \frac{1}{V_E L}
+\]</div>
+</section>
+<section id="body-effect">
+<h2>Body effect<a class="headerlink" href="#body-effect" title="Permalink to this headline">#</a></h2>
+<p>Page 5</p>
+</section>
+<section id="subthreshold-conduction">
+<h2>Subthreshold conduction<a class="headerlink" href="#subthreshold-conduction" title="Permalink to this headline">#</a></h2>
+<p>Page 5</p>
+</section>
+<section id="mosfet-capacitance">
+<h2>MOSFET capacitance<a class="headerlink" href="#mosfet-capacitance" title="Permalink to this headline">#</a></h2>
+<p>Page 6</p>
+<section id="mosfet-as-a-varactor">
+<h3>MOSFET as a varactor<a class="headerlink" href="#mosfet-as-a-varactor" title="Permalink to this headline">#</a></h3>
+<p>Page 7</p>
+</section>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./content"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+            </main>
+            <footer class="footer-article noprint">
+                
+    <!-- Previous / next buttons -->
+<div class='prev-next-area'>
+    <a class='left-prev' id="prev-link" href="../index.html" title="previous page">
+        <i class="fas fa-angle-left"></i>
+        <div class="prev-next-info">
+            <p class="prev-next-subtitle">previous</p>
+            <p class="prev-next-title">Welcome to ECEN 661</p>
+        </div>
+    </a>
+    <a class='right-next' id="next-link" href="small_signal_model.html" title="next page">
+    <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Small Signal Model</p>
+    </div>
+    <i class="fas fa-angle-right"></i>
+    </a>
+</div>
+            </footer>
+        </div>
+    </div>
+    <div class="footer-content row">
+        <footer class="col footer"><p>
+  
+    By Dr. Wood Chiang<br/>
+  
+      &copy; Copyright Winter 2021.<br/>
+</p>
+        </footer>
+    </div>
+    
+</div>
+
+
+      </div>
+    </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf"></script>
+
+
+  </body>
+</html>

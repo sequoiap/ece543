@@ -1,0 +1,794 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>Common Source Amplifier &#8212; CMOS Amplifier Design</title>
+    
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+
+    
+  <link rel="stylesheet"
+    href="../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" href="../_static/styles/sphinx-book-theme.css?digest=5115cc725059bd94278eecd172e13a965bf8f5a9" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/design-style.b7bb847fb20b106c3d81b95245e65545.min.css" />
+    
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf">
+
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/clipboard.min.js"></script>
+    <script src="../_static/copybutton.js"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?digest=9c920249402e914e316237a7dbc6769907cce411"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../_static/sphinx-thebe.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Common Drain Amplifier" href="common_drain_amplifier.html" />
+    <link rel="prev" title="Small Signal Model" href="small_signal_model.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="None">
+    
+
+    <!-- Google Analytics -->
+    
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="60">
+<!-- Checkboxes to toggle the left sidebar -->
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation" aria-label="Toggle navigation sidebar">
+<label class="overlay overlay-navbar" for="__navigation">
+    <div class="visually-hidden">Toggle navigation sidebar</div>
+</label>
+<!-- Checkboxes to toggle the in-page toc -->
+<input type="checkbox" class="sidebar-toggle" name="__page-toc" id="__page-toc" aria-label="Toggle in-page Table of Contents">
+<label class="overlay overlay-pagetoc" for="__page-toc">
+    <div class="visually-hidden">Toggle in-page Table of Contents</div>
+</label>
+<!-- Headers at the top -->
+<div class="announcement header-item noprint"></div>
+<div class="header header-item noprint"></div>
+
+    
+    <div class="container-fluid" id="banner"></div>
+
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<!-- Sidebar -->
+<div class="bd-sidebar noprint" id="site-navigation">
+    <div class="bd-sidebar__content">
+        <div class="bd-sidebar__top"><div class="navbar-brand-box">
+    <a class="navbar-brand text-wrap" href="../index.html">
+      
+        <!-- `logo` is deprecated in Sphinx 4.0, so remove this when we stop supporting 3 -->
+        
+      
+      
+      <img src="../_static/logo.png" class="logo" alt="logo">
+      
+      
+      <h1 class="site-logo" id="site-title">CMOS Amplifier Design</h1>
+      
+    </a>
+</div><form class="bd-search d-flex align-items-center" action="../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../index.html">
+                    Welcome to ECEN 661
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  MOSFET Physics
+ </span>
+</p>
+<ul class="current nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="mosfet_device_physics.html">
+   MOSFET Device Physics
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="small_signal_model.html">
+   Small Signal Model
+  </a>
+ </li>
+ <li class="toctree-l1 current active">
+  <a class="current reference internal" href="#">
+   Common Source Amplifier
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="common_drain_amplifier.html">
+   Common Drain Amplifier
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="common_gate_amplifier.html">
+   Common Gate Amplifiers
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="cascode_amplifier.html">
+   Cascode Amplifiers
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="amplifiers_summary.html">
+   Amplifiers Summary
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Differential Amplifiers
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="differential_amplifiers.html">
+   Differential Amplifiers
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="differential_pair.html">
+   Differential Pair
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="current_mirrors.html">
+   Current Mirrors
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="frequency_response.html">
+   Frequency Response
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Noise and Feedback
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="noise.html">
+   Noise
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="feedback.html">
+   Feedback
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Reference
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="glossary.html">
+   Glossary: Variables and Terms
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="equations.html">
+   Equations
+  </a>
+ </li>
+</ul>
+
+    </div>
+</nav></div>
+        <div class="bd-sidebar__bottom">
+             <!-- To handle the deprecated key -->
+            
+            <div class="navbar_extra_footer">
+            Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+            </div>
+            
+        </div>
+    </div>
+    <div id="rtd-footer-container"></div>
+</div>
+
+
+          
+
+
+          
+<!-- A tiny helper pixel to detect if we've scrolled -->
+<div class="sbt-scroll-pixel-helper"></div>
+<!-- Main content -->
+<div class="col py-0 content-container">
+    
+    <div class="header-article row sticky-top noprint">
+        
+
+
+
+<div class="col py-1 d-flex header-article-main">
+    <div class="header-article__left">
+        
+        <label for="__navigation"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="right"
+title="Toggle navigation"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-bars"></i>
+  </span>
+
+</label>
+
+        
+    </div>
+    <div class="header-article__right">
+<div class="menu-dropdown menu-dropdown-launch-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Launch interactive content">
+      <i class="fas fa-rocket"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="https://mybinder.org/v2/gh/sequoiap/ece543/master?urlpath=tree/docs/content/common_source_amplifier.ipynb"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Launch on Binder"
+>
+  
+
+<span class="headerbtn__icon-container">
+  
+    <img src="../_static/images/logo_binder.svg">
+  </span>
+<span class="headerbtn__text-container">Binder</span>
+</a>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+
+<button onclick="toggleFullScreen()"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="bottom"
+title="Fullscreen mode"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+<div class="menu-dropdown menu-dropdown-repository-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Source repositories">
+      <i class="fab fa-github"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="https://github.com/sequoiap/ece543"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Source repository"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="headerbtn__text-container">repository</span>
+</a>
+
+      </li>
+      
+      <li>
+        <a href="https://github.com/sequoiap/ece543/issues/new?title=Issue%20on%20page%20%2Fcontent/common_source_amplifier.html&body=Your%20issue%20content%20here."
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Open an issue"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="headerbtn__text-container">open issue</span>
+</a>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+
+<div class="menu-dropdown menu-dropdown-download-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Download this page">
+      <i class="fas fa-download"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="../_sources/content/common_source_amplifier.ipynb"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Download source file"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="headerbtn__text-container">.ipynb</span>
+</a>
+
+      </li>
+      
+      <li>
+        
+<button onclick="printPdf(this)"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="left"
+title="Print to PDF"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="headerbtn__text-container">.pdf</span>
+</button>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+<label for="__page-toc"
+  class="headerbtn headerbtn-page-toc"
+  
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-list"></i>
+  </span>
+
+</label>
+
+    </div>
+</div>
+
+<!-- Table of contents -->
+<div class="col-md-3 bd-toc show noprint">
+    <div class="tocsection onthispage pt-5 pb-3">
+        <i class="fas fa-list"></i> Contents
+    </div>
+    <nav id="bd-toc-nav" aria-label="Page">
+        <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#large-signal-behavior">
+   Large-signal behavior
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#small-signal-gain">
+   Small signal gain
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#cs-with-nmos-load">
+   CS with NMOS load
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#cs-with-pmos-diode-load">
+   CS with PMOS diode load
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#cs-with-pmos-load">
+   CS with PMOS load
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#cs-with-source-degeneration">
+   CS with source degeneration
+  </a>
+ </li>
+</ul>
+
+    </nav>
+</div>
+    </div>
+    <div class="article row">
+        <div class="col pl-md-3 pl-lg-5 content-container">
+            <!-- Table of contents that is only displayed when printing the page -->
+            <div id="jb-print-docs-body" class="onlyprint">
+                <h1>Common Source Amplifier</h1>
+                <!-- Table of contents -->
+                <div id="print-main-content">
+                    <div id="jb-print-toc">
+                        
+                        <div>
+                            <h2> Contents </h2>
+                        </div>
+                        <nav aria-label="Page">
+                            <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#large-signal-behavior">
+   Large-signal behavior
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#small-signal-gain">
+   Small signal gain
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#cs-with-nmos-load">
+   CS with NMOS load
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#cs-with-pmos-diode-load">
+   CS with PMOS diode load
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#cs-with-pmos-load">
+   CS with PMOS load
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#cs-with-source-degeneration">
+   CS with source degeneration
+  </a>
+ </li>
+</ul>
+
+                        </nav>
+                    </div>
+                </div>
+            </div>
+            <main id="main-content" role="main">
+                
+              <div>
+                
+  <section class="tex2jax_ignore mathjax_ignore" id="common-source-amplifier">
+<h1>Common Source Amplifier<a class="headerlink" href="#common-source-amplifier" title="Permalink to this headline">#</a></h1>
+<section id="large-signal-behavior">
+<h2>Large-signal behavior<a class="headerlink" href="#large-signal-behavior" title="Permalink to this headline">#</a></h2>
+<figure class="align-default" id="fig19">
+<a class="reference internal image-reference" href="../_images/fig19.jpg"><img alt="../_images/fig19.jpg" src="../_images/fig19.jpg" style="height: 250px;" /></a>
+<figcaption>
+<p><span class="caption-number">Fig. 26 </span><span class="caption-text">Common-source amplifier and large-signal behavior.</span><a class="headerlink" href="#fig19" title="Permalink to this image">#</a></p>
+</figcaption>
+</figure>
+<p>As <span class="math notranslate nohighlight">\(V_{\text{th}}\)</span> begins to ramp up from zero, the MOSFET is initially in
+cutoff (no channel has formed). As the saturation regime is reached, the current
+begins to increase quadratically (<span class="math notranslate nohighlight">\(I_D \propto (V_{\text{in}} - V_a)^2\)</span>). Continuing
+to increase <span class="math notranslate nohighlight">\(V_{\text{th}}\)</span> will eventually put the MOSFET into the triode regime
+(when <span class="math notranslate nohighlight">\(V_{\text{GS}} - V_{\text{th}} \gt V_{\text{DS}}\)</span>). Once you hit that point,
+<span class="math notranslate nohighlight">\(I_D\)</span> no longer increases quadratically. The max slope is therefore somewhere
+between saturation and triode. To achieve the maximal amplifier gain, you’d bias
+around that point.</p>
+</section>
+<section id="small-signal-gain">
+<h2>Small signal gain<a class="headerlink" href="#small-signal-gain" title="Permalink to this headline">#</a></h2>
+<figure class="align-default" id="fig20">
+<a class="reference internal image-reference" href="../_images/fig20.jpg"><img alt="../_images/fig20.jpg" src="../_images/fig20.jpg" style="height: 250px;" /></a>
+<figcaption>
+<p><span class="caption-number">Fig. 27 </span><span class="caption-text">Small-signal gain.</span><a class="headerlink" href="#fig20" title="Permalink to this image">#</a></p>
+</figcaption>
+</figure>
+<p>The gain is given by</p>
+<div class="math notranslate nohighlight" id="equation-gain-common-source">
+<span class="eqno">(8)<a class="headerlink" href="#equation-gain-common-source" title="Permalink to this equation">#</a></span>\[
+    A = \frac{V_{\text{out}}}{V_{\text{in}}} = -g_m (r_o || R_D)
+\]</div>
+<p>If <span class="math notranslate nohighlight">\(R_D = \infty\)</span>,</p>
+<div class="math notranslate nohighlight" id="equation-gain-common-source-infty">
+<span class="eqno">(9)<a class="headerlink" href="#equation-gain-common-source-infty" title="Permalink to this equation">#</a></span>\[
+    A = -g_m r_o = - \frac{2 I_D}{V_{\text{GS}} - V_{\text{th}}} \frac{V_E L}{I_D} = - \frac{2 V_E L}{V_{\text{GS}} - V_{\text{th}}}
+\]</div>
+<p>In modern processes, this gain is on the order of -10 and <span class="math notranslate nohighlight">\(r_o \gg 1/g_m\)</span>.</p>
+<p>You use a large <span class="math notranslate nohighlight">\(R_D\)</span> to maximize gain, but this moves the transistor’s bias point closer to triode. The output swing decreases, and the gain varies with input bias voltage.</p>
+</section>
+<section id="cs-with-nmos-load">
+<h2>CS with NMOS load<a class="headerlink" href="#cs-with-nmos-load" title="Permalink to this headline">#</a></h2>
+<figure class="align-default" id="fig21">
+<a class="reference internal image-reference" href="../_images/fig21.jpg"><img alt="../_images/fig21.jpg" src="../_images/fig21.jpg" style="height: 250px;" /></a>
+<figcaption>
+<p><span class="caption-number">Fig. 28 </span><span class="caption-text">CS w/ NMOS load.</span><a class="headerlink" href="#fig21" title="Permalink to this image">#</a></p>
+</figcaption>
+</figure>
+<figure class="align-default" id="fig22">
+<a class="reference internal image-reference" href="../_images/fig22.jpg"><img alt="../_images/fig22.jpg" src="../_images/fig22.jpg" style="height: 250px;" /></a>
+<figcaption>
+<p><span class="caption-number">Fig. 29 </span><span class="caption-text">Small-signal model.</span><a class="headerlink" href="#fig22" title="Permalink to this image">#</a></p>
+</figcaption>
+</figure>
+<p>For this model, we assume that <span class="math notranslate nohighlight">\(g_m r_o \gg 1\)</span> and <span class="math notranslate nohighlight">\(r_o \gg 1/g_m\)</span>.</p>
+<p>The current <span class="math notranslate nohighlight">\(I_x\)</span> is given by</p>
+<div class="math notranslate nohighlight">
+\[
+    I_x = (g_m + g_{\text{mb}}) V_x + \frac{V_x}{r_o}
+\]</div>
+<p>Also,</p>
+<div class="math notranslate nohighlight">
+\[
+    \frac{V_x}{I_x} = \frac{1}{g_m + g_{\text{mb}}} || r_o \approxeq \frac{1}{g_m + g_{\text{mb}}}
+\]</div>
+<p>The gain is given by</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+    A &amp;\approxeq -g_{\text{m1}} \frac{1}{g_{\text{m2}} + g_{\text{mb2}}} = -\frac{g_{m1}}{g_{m2}} \frac{1}{1 + \eta} = \frac{\sqrt{2 \mu c_{\text{ox}} \left( \frac{W}{L} \right)_1 I_{\text{D1}}}}{\sqrt{2 \mu c_{\text{ox}} \left( \frac{W}{L} \right)_2 I_{\text{D2}}}} \frac{1}{1 + \eta} \\
+    &amp;= \sqrt{\frac{ \left( \frac{W}{L} \right)_1 }{ \left( \frac{W}{L} \right)_2 }} \frac{1}{1 + \eta}
+\end{split}\]</div>
+<p>The gain doesn’t vary with input bias voltage. It does, however, have limited swing.</p>
+<p>In this design,</p>
+<ul class="simple">
+<li><p>Gain is more stable across process variations.</p></li>
+<li><p>Usually the gain is smaller compared to the previous topology.</p></li>
+<li><p>Gain is independent of input bias.</p></li>
+</ul>
+</section>
+<section id="cs-with-pmos-diode-load">
+<h2>CS with PMOS diode load<a class="headerlink" href="#cs-with-pmos-diode-load" title="Permalink to this headline">#</a></h2>
+<p>Also known as a “diode connected transistor.”</p>
+<figure class="align-default" id="fig23">
+<a class="reference internal image-reference" href="../_images/fig23.jpg"><img alt="../_images/fig23.jpg" src="../_images/fig23.jpg" style="height: 250px;" /></a>
+<figcaption>
+<p><span class="caption-number">Fig. 30 </span><span class="caption-text">Circuit diagram.</span><a class="headerlink" href="#fig23" title="Permalink to this image">#</a></p>
+</figcaption>
+</figure>
+<p>The input resistance looking into M2 is</p>
+<div class="math notranslate nohighlight">
+\[
+    R_{\text{up}} = \frac{1}{g_m} || r_o
+\]</div>
+<p>which is much smaller than <span class="math notranslate nohighlight">\(r_o\)</span> because the <span class="math notranslate nohighlight">\(1/g_m\)</span> term dominates in parallel.</p>
+<p>The gain is given by</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+    A &amp;= -g_{\text{m1}} \left( r_{o1} || \frac{1}{g_{m2}} || r_{o2} \right) \\
+    &amp;\approxeq \frac{-g_{m1}}{g_{m2}} = \frac{\sqrt{2 \mu_n c_{\text{ox_{n}}} \left( \frac{W}{L} \right)_1 I_{\text{D1}}}}{\sqrt{2 \mu_p c_{\text{ox_{p}}} \left( \frac{W}{L} \right)_2 I_{\text{D2}}}} \\
+    &amp;= - \sqrt{ \frac{\mu_n c_{\text{ox_{n}}} \left( \frac{W}{L} \right)_1}{\mu_p c_{\text{ox_{p}}} \left( \frac{W}{L} \right)_2} }
+\end{split}\]</div>
+<p>We can cancel <span class="math notranslate nohighlight">\(I_{D1}\)</span> and <span class="math notranslate nohighlight">\(I_{D2}\)</span> on the second line above if we assume a
+strong inversion. The gain again doesn’t vary with input bias voltage, but has
+limited swing.</p>
+</section>
+<section id="cs-with-pmos-load">
+<h2>CS with PMOS load<a class="headerlink" href="#cs-with-pmos-load" title="Permalink to this headline">#</a></h2>
+<figure class="align-default" id="fig24">
+<a class="reference internal image-reference" href="../_images/fig24.jpg"><img alt="../_images/fig24.jpg" src="../_images/fig24.jpg" style="height: 250px;" /></a>
+<figcaption>
+<p><span class="caption-number">Fig. 31 </span><span class="caption-text">Circuit diagram.</span><a class="headerlink" href="#fig24" title="Permalink to this image">#</a></p>
+</figcaption>
+</figure>
+<p>In this configuration, the input resistance looking up is</p>
+<div class="math notranslate nohighlight">
+\[
+    R_{\text{up}} = r_{o2}
+\]</div>
+<p>The gain is given by</p>
+<div class="math notranslate nohighlight">
+\[
+    A = -g_{m1} (r_{o1} || r_{o2})
+\]</div>
+<p>This design is</p>
+<ul class="simple">
+<li><p>Dependent on process, voltage, temperature (PVT) variation</p></li>
+<li><p>Much higher gain than earlier architectures.</p></li>
+</ul>
+<p>This looks very similar to the circuit with a resistor load above <span class="math notranslate nohighlight">\(V_{\text{out}}\)</span>.
+There are differences, however.</p>
+<figure class="align-default" id="fig25">
+<a class="reference internal image-reference" href="../_images/fig25.jpg"><img alt="../_images/fig25.jpg" src="../_images/fig25.jpg" style="height: 250px;" /></a>
+<figcaption>
+<p><span class="caption-number">Fig. 32 </span><span class="caption-text">Difference between resistor load and MOSFET load.</span><a class="headerlink" href="#fig25" title="Permalink to this image">#</a></p>
+</figcaption>
+</figure>
+<p><span class="math notranslate nohighlight">\(r_{o2}\)</span> can increase without driving M1 into triode. In the first case (left),
+a large <span class="math notranslate nohighlight">\(R_D\)</span> causes a large voltage drop <span class="math notranslate nohighlight">\(I_D R_D\)</span> which moves M1 closer to triode.
+In the second case (right), a big <span class="math notranslate nohighlight">\(r_{o2}\)</span> doesn’t change <span class="math notranslate nohighlight">\(V_{\text{SD}}\)</span>. Therefore,
+M1 can stay far away from triode; the voltage drop is NOT <span class="math notranslate nohighlight">\(I_D r_{o2}\)</span>.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>You cannot multiply a large signal current with a small signal resistance.</p>
+</div>
+<div class="tip admonition">
+<p class="admonition-title">Summary</p>
+<p>As <span class="math notranslate nohighlight">\(R_D\)</span> increases, <span class="math notranslate nohighlight">\(V_{\text{out}}\)</span> decreases, which forces M1 into triode.</p>
+</div>
+</section>
+<section id="cs-with-source-degeneration">
+<h2>CS with source degeneration<a class="headerlink" href="#cs-with-source-degeneration" title="Permalink to this headline">#</a></h2>
+<figure class="align-default" id="fig26">
+<a class="reference internal image-reference" href="../_images/fig26.jpg"><img alt="../_images/fig26.jpg" src="../_images/fig26.jpg" style="height: 250px;" /></a>
+<figcaption>
+<p><span class="caption-number">Fig. 33 </span><span class="caption-text">Common source amplifier with source degeneration.</span><a class="headerlink" href="#fig26" title="Permalink to this image">#</a></p>
+</figcaption>
+</figure>
+<figure class="align-default" id="fig27">
+<a class="reference internal image-reference" href="../_images/fig27.jpg"><img alt="../_images/fig27.jpg" src="../_images/fig27.jpg" style="height: 150px;" /></a>
+<figcaption>
+<p><span class="caption-number">Fig. 34 </span><span class="caption-text">Generalized amplifier model.</span><a class="headerlink" href="#fig27" title="Permalink to this image">#</a></p>
+</figcaption>
+</figure>
+<figure class="margin align-default" id="fig28">
+<a class="reference internal image-reference" href="../_images/fig28.jpg"><img alt="../_images/fig28.jpg" src="../_images/fig28.jpg" style="height: 110px;" /></a>
+<figcaption>
+<p><span class="caption-number">Fig. 35 </span><span class="caption-text">Small signal ground.</span><a class="headerlink" href="#fig28" title="Permalink to this image">#</a></p>
+</figcaption>
+</figure>
+<p>We can short the output to ground, applying <span class="math notranslate nohighlight">\(V_{\text{in}}\)</span> and observing
+<span class="math notranslate nohighlight">\(I_{\text{out}}\)</span>, as shown in <a class="reference internal" href="#fig28"><span class="std std-numref">Figure 35</span></a>. Doing so yields</p>
+<div class="math notranslate nohighlight">
+\[
+    G_m = \frac{I_{\text{out}}}{V_{\text{in}}}
+\]</div>
+<figure class="margin align-default" id="fig29">
+<a class="reference internal image-reference" href="../_images/fig29.jpg"><img alt="../_images/fig29.jpg" src="../_images/fig29.jpg" style="height: 150px;" /></a>
+<figcaption>
+<p><span class="caption-number">Fig. 36 </span><span class="caption-text">Apply a test voltage.</span><a class="headerlink" href="#fig29" title="Permalink to this image">#</a></p>
+</figcaption>
+</figure>
+<p>We can now ground the output. Apply <span class="math notranslate nohighlight">\(V_x\)</span>, a test voltage, to the op amp and
+observe <span class="math notranslate nohighlight">\(I_x\)</span>, as in <a class="reference internal" href="#fig29"><span class="std std-numref">Figure 36</span></a>. Doing so yields</p>
+<div class="math notranslate nohighlight">
+\[
+    R_{\text{out}} = \frac{V_x}{I_x}
+\]</div>
+<figure class="align-default" id="fig30">
+<a class="reference internal image-reference" href="../_images/fig30.jpg"><img alt="../_images/fig30.jpg" src="../_images/fig30.jpg" style="height: 200px;" /></a>
+<figcaption>
+<p><span class="caption-number">Fig. 37 </span><span class="caption-text">CS with source degeneration small-signal model.</span><a class="headerlink" href="#fig30" title="Permalink to this image">#</a></p>
+</figcaption>
+</figure>
+<p>Lots of equations from page 16 of the notes.</p>
+<figure class="align-default" id="fig31">
+<a class="reference internal image-reference" href="images/fig31.jpg"><img alt="images/fig31.jpg" src="images/fig31.jpg" style="height: 250px;" /></a>
+<figcaption>
+<p><span class="caption-number">Fig. 38 </span><span class="caption-text">Input resistance model.</span><a class="headerlink" href="#fig31" title="Permalink to this image">#</a></p>
+</figcaption>
+</figure>
+<div class="tip admonition">
+<p class="admonition-title">Summary</p>
+<ul class="simple">
+<li><p>The gain of the common source with degenration is guaranteed to be less than
+a common source amplifier alone.</p></li>
+<li><p>CS with degeneration is more robust over PVT than common source. Process is
+parameterized by variables like <span class="math notranslate nohighlight">\(\mu\)</span>, <span class="math notranslate nohighlight">\(c_{\text{ox}}\)</span>, etc. The voltage
+supply can also vary.</p></li>
+</ul>
+</div>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./content"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+            </main>
+            <footer class="footer-article noprint">
+                
+    <!-- Previous / next buttons -->
+<div class='prev-next-area'>
+    <a class='left-prev' id="prev-link" href="small_signal_model.html" title="previous page">
+        <i class="fas fa-angle-left"></i>
+        <div class="prev-next-info">
+            <p class="prev-next-subtitle">previous</p>
+            <p class="prev-next-title">Small Signal Model</p>
+        </div>
+    </a>
+    <a class='right-next' id="next-link" href="common_drain_amplifier.html" title="next page">
+    <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Common Drain Amplifier</p>
+    </div>
+    <i class="fas fa-angle-right"></i>
+    </a>
+</div>
+            </footer>
+        </div>
+    </div>
+    <div class="footer-content row">
+        <footer class="col footer"><p>
+  
+    By Dr. Wood Chiang<br/>
+  
+      &copy; Copyright Winter 2021.<br/>
+</p>
+        </footer>
+    </div>
+    
+</div>
+
+
+      </div>
+    </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf"></script>
+
+
+  </body>
+</html>
